@@ -8,9 +8,9 @@ char keys[ROWS][COLS]={
 };
 
 // 定義 Keypad 連到 Arduino 的接腳
-byte rowPins[ROWS] = {6,7,8,9};
+byte rowPins[ROWS] = {2,3,4,5};
 // 連到 Keypad 的 4 個 Rows
-byte colPins[COLS] = {2,3,4,5};
+byte colPins[COLS] = {9, 8, 7, 6};
 Keypad keypad =
 Keypad( makeKeymap(keys), rowPins,colPins, ROWS, COLS );
 const byte SP_PIN=16;
@@ -52,7 +52,6 @@ int tune[]={NOTE_C3,NOTE_CS3
 ,NOTE_D3,NOTE_DS3,NOTE_E3,NOTE_F3,NOTE_FS3,NOTE_G3,NOTE_GS3,NOTE_A3,NOTE_AS3,NOTE_B3,NOTE_C4,NOTE_CS4,NOTE_D4,NOTE_E4};
 void setup() {
  pinMode(SP_PIN,OUTPUT);
-
  Serial.begin(9600); 
 }
 
@@ -61,23 +60,23 @@ void loop() {
   char key = keypad.getKey(); // 讀取 Keypad
   int key1=key-'0';
   int key2=key-'A'+10;
-  Serial.println(key);
+  //Serial.println(key);
 
   
 if (key != NO_KEY){
   if(key>='0'&&key<='9')
   {
-Serial.println(key1);
-tone(8,tune[key1]);
-  delay(500);
-  noTone(8);
-  }
+    Serial.println(key1);
+    tone(SP_PIN,tune[key1]);
+    delay(500);
+    noTone(SP_PIN);
+    }
   if(key>='A'&&key<='F')
   {
-Serial.println(key2);
-tone(8,tune[key2]);
-  delay(500);
-  noTone(8);
-}
-}
+    Serial.println(key2);
+    tone(SP_PIN,tune[key2]);
+    delay(500);
+    noTone(SP_PIN);
+    }
+  }
 }
